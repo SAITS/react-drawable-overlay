@@ -1,13 +1,22 @@
-import React, { Component } from 'react'
+import React from "react"
+import ReactDrawableOverlay from "react-drawable-overlay"
+import Toolbar from "./components/Toolbar"
 
-import ExampleComponent from 'react-drawable-overlay'
+function App() {
+  const renderDrawableContent = () => (
+    <div style={{ height: 500, width: 1000 }} className="drawable-content" />
+  )
 
-export default class App extends Component {
-  render () {
-    return (
-      <div>
-        <ExampleComponent text='Modern React component module' />
-      </div>
-    )
-  }
+  return (
+    <div className="wrapper">
+      <ReactDrawableOverlay
+        renderDrawableContent={renderDrawableContent}
+        defaultBrushColor="#0000FF"
+      >
+        <Toolbar />
+      </ReactDrawableOverlay>
+    </div>
+  )
 }
+
+export default App

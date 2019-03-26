@@ -1,8 +1,15 @@
-/* add css styles here (optional) */
+.ReactDrawableOverlay {
+  width: max-content;
+}
 
-.test {
-  display: inline-block;
-  margin: 2em auto;
-  border: 2px solid #000;
-  font-size: 2em;
+.ReactDrawableOverlay__DrawableContent {
+  position: relative;
+  width: max-content;
+}
+
+.ReactDrawableOverlay__Stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 50;
 }
