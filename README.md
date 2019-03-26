@@ -14,12 +14,28 @@ npm install --save react-drawable-overlay
 
 ```jsx
 import React, { Component } from "react"
-
-import MyComponent from "react-drawable-overlay"
+import DrawableOverlay from "react-drawable-overlay"
 
 class Example extends Component {
+  renderDrawableContent = () => (
+    <div style={{ height: 500, width: 1000 }}>
+      <p>Content that can be drawn on</p>
+    </div>
+  )
+
   render() {
-    return <MyComponent />
+    return (
+      <DrawableOverlay
+        renderDrawableContent={renderDrawableContent}
+        defaultBrushColor="#000"
+      >
+        <p>
+          Content that cannot be drawn on but still has access to the
+          Context-values
+        </p>
+        <Toolbar />
+      </DrawableOverlay>
+    )
   }
 }
 ```

@@ -7,7 +7,7 @@ import "./styles.css"
 
 export const DrawableContext = createContext({})
 
-function Drawable(props) {
+function DrawableOverlay(props) {
   const layerRef = useRef()
   const drawableRef = useRef()
   const [history, setHistory] = useState([])
@@ -139,7 +139,7 @@ function Drawable(props) {
   )
 }
 
-Drawable.propTypes = {
+DrawableOverlay.propTypes = {
   renderDrawableContent: PropTypes.func,
   inDrawMode: PropTypes.bool,
   defaultBrushColor: PropTypes.string,
@@ -149,8 +149,8 @@ Drawable.propTypes = {
   ]),
 }
 
-Drawable.defaultProps = {
+DrawableOverlay.defaultProps = {
   inDrawMode: true,
 }
 
-export default Drawable
+export default DrawableOverlay
