@@ -1,10 +1,5 @@
-.ReactDrawableOverlay {
-  width: max-content;
-}
-
 .ReactDrawableOverlay__DrawableContent {
   position: relative;
-  width: max-content;
 }
 
 .ReactDrawableOverlay__Stage {

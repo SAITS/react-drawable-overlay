@@ -105,9 +105,13 @@ function DrawableOverlay(props) {
     setDrawMode,
   }
 
+  const className = props.className
+    ? `ReactDrawableOverlay ${props.className}`
+    : "ReactDrawableOverlay"
+
   return (
     <DrawableContext.Provider value={contextValue}>
-      <div className="ReactDrawableOverlay">
+      <div className={className}>
         <div
           className="ReactDrawableOverlay__DrawableContent"
           ref={drawableRef}
@@ -143,6 +147,7 @@ DrawableOverlay.propTypes = {
   renderDrawableContent: PropTypes.func,
   inDrawMode: PropTypes.bool,
   defaultBrushColor: PropTypes.string,
+  className: PropTypes.string
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

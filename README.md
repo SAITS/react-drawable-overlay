@@ -7,7 +7,8 @@
 ## Install
 
 ```bash
-npm install --save react-drawable-overlay
+$ npm install --save react-drawable-overlay
+$ yarn add react-drawable-overlay
 ```
 
 ## Usage
