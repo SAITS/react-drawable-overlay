@@ -51,9 +51,7 @@ class Example extends Component {
 
 ## Example
 
-```
 See the example-folder for an example on how to use the package.
-```
 
 ## License
 
