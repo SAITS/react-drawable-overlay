@@ -1,5 +1,5 @@
 import React from "react"
-import ReactDrawableOverlay from "react-drawable-overlay"
+import DrawableOverlay from "react-drawable-overlay"
 import Toolbar from "./components/Toolbar"
 
 function App() {
@@ -9,12 +9,12 @@ function App() {
 
   return (
     <div className="wrapper">
-      <ReactDrawableOverlay
+      <DrawableOverlay
         renderDrawableContent={renderDrawableContent}
         defaultBrushColor="#0000FF"
       >
         <Toolbar />
-      </ReactDrawableOverlay>
+      </DrawableOverlay>
     </div>
   )
 }
