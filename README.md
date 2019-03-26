@@ -41,6 +41,22 @@ class Example extends Component {
 }
 ```
 
+## Props
+
+```
+* `renderDrawableContent` - Function. Returns the element you want to draw on. Required.
+* `inDrawMode` - Boolean. Whether or not you can draw on the element. Defaults to true.
+* `className` - String. Adds a class to ReactDrawableOverlay.
+* `defaultBrushColor` - String (hexadecimal). If this is not specified, #000000 will be the initial brush color.
+* `children` - Node/s. Children will not be able to be drawn on, but they can still access the context.
+```
+
+## Example
+
+```
+See the example-folder for an example on how to use the package.
+```
+
 ## License
 
 MIT © [jimmyhoglund](https://github.com/jimmyhoglund)

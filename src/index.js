@@ -17,7 +17,7 @@ function DrawableOverlay(props) {
   const [brushSize, setBrushSize] = useState(10)
   const [eraserSize, setEraserSize] = useState(10)
   const [brushColor, setBrushColor] = useState(
-    props.defaultBrushColor || "#FFF"
+    props.defaultBrushColor || "#000000"
   )
   const { children, inDrawMode, renderDrawableContent, onAddToHistory } = props
 
