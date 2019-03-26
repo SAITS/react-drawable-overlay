@@ -13,15 +13,13 @@ npm install --save react-drawable-overlay
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
+import React, { Component } from "react"
 
-import MyComponent from 'react-drawable-overlay'
+import MyComponent from "react-drawable-overlay"
 
 class Example extends Component {
-  render () {
-    return (
-      <MyComponent />
-    )
+  render() {
+    return <MyComponent />
   }
 }
 ```
