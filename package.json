@@ -1,7 +1,7 @@
 {
   "name": "react-drawable-overlay",
-  "version": "1.0.0",
-  "description": "A package for wrapping an element with a drawable canvas.",
+  "version": "1.0.1",
+  "description": "A package for wrapping elements with a drawable canvas.",
   "author": "jimmyhoglund",
   "license": "MIT",
   "repository": "jimmyhoglund/react-drawable-overlay",
@@ -44,6 +44,7 @@
     "eslint-plugin-react": "^7.10.0",
     "eslint-plugin-standard": "^3.1.0",
     "gh-pages": "^1.2.0",
+    "konva": "^3.2.3",
     "react-scripts": "^1.1.4",
     "rollup": "^0.64.1",
     "rollup-plugin-babel": "^3.0.7",
