@@ -147,7 +147,7 @@ DrawableOverlay.propTypes = {
   renderDrawableContent: PropTypes.func,
   inDrawMode: PropTypes.bool,
   defaultBrushColor: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
