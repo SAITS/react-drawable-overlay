@@ -58,8 +58,8 @@ function DrawableOverlay(props) {
       newHistory.splice(nextHistoryIndex, history.length - nextHistoryIndex)
 
     setHistory([...newHistory, img])
-
     setCurrentHistoryIndex(nextHistoryIndex)
+
     onAddToHistory && onAddToHistory(img)
   }
 
