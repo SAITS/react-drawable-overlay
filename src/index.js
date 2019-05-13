@@ -38,10 +38,12 @@ function DrawableOverlay(props) {
     resizeObserver.observe(drawableRef.current)
   }, [drawableRef.current])
 
-  const clearCanvas = () =>
-    layerRef.current
-      .getContext()
-      .clear({ x: 0, y: 0, ...drawableAreaDimensions })
+  const clearCanvas = () => {
+    if (layerRef.current)
+      layerRef.current
+        .getContext()
+        .clear({ x: 0, y: 0, ...drawableAreaDimensions })
+  }
 
   const handleReset = () => {
     clearCanvas()
@@ -64,6 +66,7 @@ function DrawableOverlay(props) {
   }
 
   const handleHistoryChange = direction => {
+    if (!layerRef.current) return
     clearCanvas()
 
     const newImgSrcIndex =
