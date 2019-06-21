@@ -45,6 +45,20 @@ function DrawableOverlay(props) {
         .clear({ x: 0, y: 0, ...drawableAreaDimensions })
   }
 
+  const setInitialDrawing = img => {
+    if (!layerRef.current) return
+    setHistory([])
+    setCurrentHistoryIndex(-1)
+
+    const context = layerRef.current.getContext()
+    const initialDrawing = new Image()
+
+    initialDrawing.src = img
+    initialDrawing.onload = () => {
+      context.drawImage(initialDrawing, 0, 0)
+    }
+  }
+
   const handleReset = () => {
     clearCanvas()
     setHistory([])
@@ -96,6 +110,7 @@ function DrawableOverlay(props) {
     onRedo: redoBrushStroke,
     onClearCanvas: clearCanvas,
     onReset: handleReset,
+    setInitialDrawing,
     currentHistoryIndex,
     history,
     brushSize,
