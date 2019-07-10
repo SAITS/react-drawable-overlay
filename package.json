@@ -14,7 +14,7 @@
     "draw",
     "react-draw"
   ],
-  "main": "dist/index.js",
+  "main": "dist/index",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
   "engines": {

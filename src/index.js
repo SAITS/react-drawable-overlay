@@ -1,4 +1,10 @@
-import React, { useRef, useState, createContext, useEffect } from "react"
+import React, {
+  useRef,
+  useState,
+  createContext,
+  useEffect,
+  useContext,
+} from "react"
 import PropTypes from "prop-types"
 import { Stage, Layer } from "react-konva"
 import ResizeObserver from "resize-observer-polyfill"
@@ -7,7 +13,9 @@ import "./styles.css"
 
 export const DrawableContext = createContext({})
 
-function DrawableOverlay(props) {
+export const useDrawableContext = () => useContext(DrawableContext)
+
+const DrawableOverlay = props => {
   const layerRef = useRef()
   const drawableRef = useRef()
   const [history, setHistory] = useState([])
@@ -16,20 +24,15 @@ function DrawableOverlay(props) {
   const [drawMode, setDrawMode] = useState("brush")
   const [brushSize, setBrushSize] = useState(10)
   const [eraserSize, setEraserSize] = useState(10)
-  const [brushColor, setBrushColor] = useState(
-    props.defaultBrushColor || "#000000"
-  )
+  const [brushColor, setBrushColor] = useState(props.defaultBrushColor)
   const { children, inDrawMode, renderDrawableContent, onAddToHistory } = props
 
   const resizeObserver = new ResizeObserver(() => {
     const el = drawableRef.current
     if (!el) return
 
-    const offsetLeft = props.widthOffset || 0
-    const offsetTop = props.heightOffset || 0
-
-    const width = el.clientWidth - offsetLeft
-    const height = el.clientHeight - offsetTop
+    const width = el.clientWidth - props.widthOffset
+    const height = el.clientHeight - props.heightOffset
 
     setDrawableAreaDimensions({ width, height })
   })
@@ -106,21 +109,20 @@ function DrawableOverlay(props) {
   const redoBrushStroke = () => handleHistoryChange("redo")
 
   const contextValue = {
-    onUndo: undoBrushStroke,
-    onRedo: redoBrushStroke,
-    onClearCanvas: clearCanvas,
-    onReset: handleReset,
+    undo: undoBrushStroke,
+    redo: redoBrushStroke,
+    reset: handleReset,
     setInitialDrawing,
     currentHistoryIndex,
     history,
-    brushSize,
-    eraserSize,
     drawMode,
+    setDrawMode,
+    brushSize,
+    setBrushSize,
+    eraserSize,
+    setEraserSize,
     brushColor,
     setBrushColor,
-    setEraserSize,
-    setBrushSize,
-    setDrawMode,
   }
 
   const className = props.className
@@ -162,10 +164,13 @@ function DrawableOverlay(props) {
 }
 
 DrawableOverlay.propTypes = {
-  renderDrawableContent: PropTypes.func,
+  renderDrawableContent: PropTypes.func.isRequired,
   inDrawMode: PropTypes.bool,
   defaultBrushColor: PropTypes.string,
+  heightOffset: PropTypes.number,
+  widthOffset: PropTypes.number,
   className: PropTypes.string,
+  onAddToHistory: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
@@ -174,6 +179,9 @@ DrawableOverlay.propTypes = {
 
 DrawableOverlay.defaultProps = {
   inDrawMode: true,
+  defaultBrushColor: "#000000",
+  heightOffset: 0,
+  widthOffset: 0,
 }
 
 export default DrawableOverlay

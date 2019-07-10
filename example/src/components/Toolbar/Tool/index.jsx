@@ -1,23 +1,18 @@
-import React, { useContext } from "react"
-import { DrawableContext } from "react-drawable-overlay"
+import React from "react"
+import { useDrawableContext } from "react-drawable-overlay"
 import RangeSlider from "../../RangeSlider"
 import cx from "classnames"
 
-function Tool(props) {
-  const { drawMode, setDrawMode } = useContext(DrawableContext)
+const Tool = ({ tool, label, brushSize, onChange }) => {
+  const { drawMode, setDrawMode } = useDrawableContext()
 
   return (
     <div
-      className={cx("tool", { "tool--active": drawMode === props.tool })}
-      onClick={() => setDrawMode(props.tool)}
+      className={cx("tool", { "tool--active": drawMode === tool })}
+      onClick={() => setDrawMode(tool)}
     >
-      <span className="tool__name">{props.label}</span>
-      <RangeSlider
-        value={props.brushSize}
-        max={10}
-        min={1}
-        onChange={props.onChange}
-      />
+      <span className="tool__name">{label}</span>
+      <RangeSlider value={brushSize} max={10} min={1} onChange={onChange} />
     </div>
   )
 }

@@ -1,10 +1,10 @@
-import React, { useContext } from "react"
-import { DrawableContext } from "react-drawable-overlay"
+import React from "react"
+import { useDrawableContext } from "react-drawable-overlay"
 import { HuePicker } from "react-color"
 import Tool from "./Tool"
 import Button from "./Button"
 
-function Toolbar() {
+const Toolbar = () => {
   const {
     setBrushSize,
     brushSize,
@@ -12,12 +12,12 @@ function Toolbar() {
     setBrushColor,
     eraserSize,
     setEraserSize,
-    onUndo,
-    onRedo,
+    undo,
+    redo,
     currentHistoryIndex,
     history,
-    onReset,
-  } = useContext(DrawableContext)
+    reset,
+  } = useDrawableContext()
 
   const handleBrushSizeChange = e => setBrushSize(e.target.value)
 
@@ -42,19 +42,15 @@ function Toolbar() {
       />
       <Button
         icon="undo"
-        onClick={onUndo}
+        onClick={undo}
         disabled={currentHistoryIndex === -1}
       />
       <Button
         icon="redo"
-        onClick={onRedo}
+        onClick={redo}
         disabled={currentHistoryIndex + 1 === history.length}
       />
-      <Button
-        text="Reset canvas"
-        onClick={onReset}
-        disabled={!history.length}
-      />
+      <Button text="Reset canvas" onClick={reset} disabled={!history.length} />
     </div>
   )
 }

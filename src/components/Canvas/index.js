@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import { Image } from "react-konva"
 
-function Canvas(props) {
+const Canvas = props => {
   const [isDrawing, setIsDrawing] = useState(false)
   const [context, setContext] = useState(null)
   const [lastPointerPosition, setLastPointerPosition] = useState(null)
