@@ -17,6 +17,7 @@
   "main": "dist/index",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
+  "types": "types.d.ts",
   "engines": {
     "node": ">=8",
     "npm": ">=5"
