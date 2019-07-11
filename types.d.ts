@@ -1,8 +1,8 @@
-declare module "react-drawable-overlay" {
-  import React from "react"
+import React from "react"
 
-  const DrawableOverlay: React.ComponentType<DrawableOverlayProps>
-  export default DrawableOverlay
+declare module ReactDrawableOverlay {
+  declare const DrawableOverlay: React.ComponentType<DrawableOverlayProps>
+
   export function useDrawableContext(): DrawableContextValues
   export const DrawableContext: React.Context<DrawableContextValues>
 
@@ -38,3 +38,5 @@ declare module "react-drawable-overlay" {
     Eraser = "eraser",
   }
 }
+
+export default ReactDrawableOverlay
