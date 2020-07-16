@@ -4218,8 +4218,8 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
 lodash@>4.17.4, "lodash@>=3.5 <5", lodash@^4.0.1, lodash@^4.15.0, lodash@^4.17.11, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.3.0:
-  version "4.17.11"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
+  version "4.17.19"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
 
 loglevel@^1.4.1:
   version "1.6.1"
@@ -5533,8 +5533,10 @@ react-dom@16.8.5:
     scheduler "^0.13.5"
 
 "react-drawable-overlay@link:..":
-  version "0.0.0"
-  uid ""
+  version "1.0.9"
+  dependencies:
+    react-konva "^16.8.4"
+    resize-observer-polyfill "^1.5.1"
 
 react-error-overlay@^4.0.1:
   version "4.0.1"
