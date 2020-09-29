@@ -1,30 +1,33 @@
-import * as React from "react"
+export interface DrawableStateContext {
+  drawMode: DrawModeTypes
+  brushSize: number
+  eraserSize: number
+  brushColor: string
+  inDrawMode: boolean
+}
 
-export interface DrawableContextValues {
+export interface DrawableUtilsContext {
+  reset: () => void
+  setDrawMode: (drawMode: DrawModeTypes) => void
+  setBrushSize: (size: number) => void
+  setEraserSize: (size: number) => void
+  setBrushColor: (hexadecimal: string) => void
+  setInitialDrawing: (drawing: string) => void
+  setInDrawMode: (inDrawMode: boolean) => void
+}
+
+export interface DrawableHistoryContext {
   undo: () => void
   redo: () => void
-  reset: () => void
-  setInitialDrawing: (drawing: string) => void
-  currentHistoryIndex: number
   history: string[]
-  drawMode: DrawModeTypes
-  setDrawMode: (drawMode: DrawModeTypes) => void
-  brushSize: number
-  setBrushSize: (size: number) => void
-  eraserSize: number
-  setEraserSize: (size: number) => void
-  brushColor: string
-  setBrushColor: (hexadecimal: string) => void
+  currentHistoryIndex: number
 }
-export const DrawableContext: React.Context<DrawableContextValues>
 export interface DrawableOverlayProps {
   widthOffset?: number
   heightOffset?: number
   defaultBrushColor?: string
-  inDrawMode?: boolean
+  initialInDrawMode?: boolean
   children?: JSX.Element | JSX.Element[]
-  className?: string
-  renderDrawableContent: () => JSX.Element
   onAddToHistory?: (drawing: string) => void
 }
 export type DrawModeTypes = "brush" | "eraser"
@@ -32,6 +35,10 @@ export enum DrawMode {
   Brush = "brush",
   Eraser = "eraser",
 }
-export declare function useDrawableContext(): DrawableContextValues
-declare class DrawableOverlay extends React.Component<DrawableOverlayProps> {}
-export default DrawableOverlay
+export declare function useDrawableState(): DrawableStateContext
+export declare function useDrawableUtils(): DrawableUtilsContext
+export declare function useDrawableHistory(): DrawableHistoryContext
+export declare function useStage(): JSX.Element
+export declare const DrawableOverlay: (
+  props: DrawableOverlayProps
+) => JSX.Element

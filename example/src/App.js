@@ -1,20 +1,31 @@
 import React from "react"
-import DrawableOverlay from "react-drawable-overlay"
+import { DrawableOverlay, useStage } from "react-drawable-overlay"
 import Toolbar from "./components/Toolbar"
 
-const renderDrawableContent = () => (
-  <div style={{ height: 500, width: 1000 }} className="drawable-content" />
-)
+const Content = () => {
+  const stage = useStage()
 
-const App = () => (
-  <div className="wrapper">
-    <DrawableOverlay
-      renderDrawableContent={renderDrawableContent}
-      defaultBrushColor="#0000FF"
-    >
+  return (
+    <React.Fragment>
+      <div
+        style={{ position: "relative", height: 500, width: 1000 }}
+        className="drawable-content"
+      >
+        {stage}
+      </div>
       <Toolbar />
-    </DrawableOverlay>
-  </div>
-)
+    </React.Fragment>
+  )
+}
+
+const App = () => {
+  return (
+    <div className="wrapper">
+      <DrawableOverlay defaultBrushColor="#0000FF" initialInDrawMode>
+        <Content />
+      </DrawableOverlay>
+    </div>
+  )
+}
 
 export default App

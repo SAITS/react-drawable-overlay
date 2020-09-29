@@ -1,10 +1,11 @@
 import React from "react"
-import { useDrawableContext } from "react-drawable-overlay"
+import { useDrawableState, useDrawableUtils } from "react-drawable-overlay"
 import RangeSlider from "../../RangeSlider"
 import cx from "classnames"
 
 const Tool = ({ tool, label, brushSize, onChange }) => {
-  const { drawMode, setDrawMode } = useDrawableContext()
+  const { drawMode } = useDrawableState()
+  const { setDrawMode } = useDrawableUtils()
 
   return (
     <div
