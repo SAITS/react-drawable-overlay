@@ -28,7 +28,6 @@ export interface DrawableOverlayProps {
   defaultBrushColor?: string
   initialInDrawMode?: boolean
   children?: JSX.Element | JSX.Element[]
-  className?: string
   onAddToHistory?: (drawing: string) => void
 }
 export type DrawModeTypes = "brush" | "eraser"

@@ -52,7 +52,6 @@ const Example = () => {
 | `initialInDrawMode` | `boolean`                    | `false`     | Whether or not you can draw on the stage.    |
 | `defaultBrushColor` | `string`                     | `#000000`   | Hexadecimal color on the initial render.     |
 | `children`          | `node`/`node[]`              | `undefined` | All children have access to the context.     |
-| `className`         | `string`                     | `undefined` | Add a class name to DrawableOverlay.         |
 | `heightOffset`      | `number`                     | `0`         | Used to narrow down drawable area in y-axis. |
 | `widthOffset`       | `number`                     | `0`         | Used to narrow down drawable area in x-axis. |
 | `onAddToHistory`    | `function(string/undefined)` | `undefined` | Callback on brush stroke.                    |

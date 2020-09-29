@@ -213,7 +213,6 @@ DrawableOverlay.propTypes = {
   defaultBrushColor: PropTypes.string,
   heightOffset: PropTypes.number,
   widthOffset: PropTypes.number,
-  className: PropTypes.string,
   onAddToHistory: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
