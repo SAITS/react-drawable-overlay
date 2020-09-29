@@ -1,23 +1,22 @@
 import React from "react"
-import { useDrawableContext } from "react-drawable-overlay"
+import {
+  useDrawableUtils,
+  useDrawableHistory,
+  useDrawableState,
+} from "react-drawable-overlay"
 import { HuePicker } from "react-color"
 import Tool from "./Tool"
 import Button from "./Button"
 
 const Toolbar = () => {
+  const { brushSize, brushColor, eraserSize } = useDrawableState()
   const {
-    setBrushSize,
-    brushSize,
-    brushColor,
-    setBrushColor,
-    eraserSize,
-    setEraserSize,
-    undo,
-    redo,
-    currentHistoryIndex,
-    history,
     reset,
-  } = useDrawableContext()
+    setEraserSize,
+    setBrushColor,
+    setBrushSize,
+  } = useDrawableUtils()
+  const { undo, redo, history, currentHistoryIndex } = useDrawableHistory()
 
   const handleBrushSizeChange = e => setBrushSize(e.target.value)
 

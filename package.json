@@ -1,6 +1,6 @@
 {
   "name": "react-drawable-overlay",
-  "version": "1.0.9",
+  "version": "2.0.0",
   "description": "A package for wrapping elements with a drawable canvas.",
   "author": "Jimmy Höglund",
   "license": "MIT",
@@ -33,8 +33,8 @@
   },
   "peerDependencies": {
     "prop-types": "^15.5.4",
-    "react": "^15.0.0 || ^16.8.0",
-    "react-dom": "^15.0.0 || ^16.8.0"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "devDependencies": {
     "@svgr/rollup": "^2.4.1",
@@ -64,7 +64,7 @@
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-postcss": "^1.6.2",
     "rollup-plugin-url": "^1.4.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.8.2"
   },
   "files": [
     "dist"

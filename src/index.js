@@ -4,6 +4,8 @@ import React, {
   createContext,
   useEffect,
   useContext,
+  useMemo,
+  useCallback,
 } from "react"
 import PropTypes from "prop-types"
 import { Stage, Layer } from "react-konva"
@@ -11,13 +13,32 @@ import ResizeObserver from "resize-observer-polyfill"
 import Canvas from "./components/Canvas"
 import "./styles.css"
 
-export const DrawableContext = createContext({})
+const useThrottle = (delay, callback) => {
+  let lastCall = 0
+  return (...args) => {
+    const now = new Date().getTime()
+    if (now - lastCall < delay) return null
 
-export const useDrawableContext = () => useContext(DrawableContext)
+    lastCall = now
+    return callback(...args)
+  }
+}
+
+const DrawableStateContext = createContext({})
+const DrawableUtilsContext = createContext({})
+const DrawableHistoryContext = createContext({})
+const DrawableStageContext = createContext()
+
+export const useDrawableState = () => useContext(DrawableStateContext)
+export const useDrawableUtils = () => useContext(DrawableUtilsContext)
+export const useDrawableHistory = () => useContext(DrawableHistoryContext)
+export const useStage = () => useContext(DrawableStageContext)
 
 const DrawableOverlay = props => {
+  const { children, initialInDrawMode, onAddToHistory } = props
+
   const layerRef = useRef()
-  const drawableRef = useRef()
+  const stageRef = useRef()
   const [history, setHistory] = useState([])
   const [currentHistoryIndex, setCurrentHistoryIndex] = useState(-1)
   const [drawableAreaDimensions, setDrawableAreaDimensions] = useState(null)
@@ -25,28 +46,11 @@ const DrawableOverlay = props => {
   const [brushSize, setBrushSize] = useState(10)
   const [eraserSize, setEraserSize] = useState(10)
   const [brushColor, setBrushColor] = useState(props.defaultBrushColor)
-  const { children, inDrawMode, renderDrawableContent, onAddToHistory } = props
+  const [inDrawMode, setInDrawMode] = useState(initialInDrawMode || false)
 
-  const resizeObserver = new ResizeObserver(() => {
-    const el = drawableRef.current
-    if (!el) return
-
-    const width = el.clientWidth - props.widthOffset
-    const height = el.clientHeight - props.heightOffset
-
-    setDrawableAreaDimensions({ width, height })
-  })
-
-  useEffect(() => {
-    resizeObserver.observe(drawableRef.current)
-  }, [drawableRef.current])
-
-  const clearCanvas = () => {
-    if (layerRef.current)
-      layerRef.current
-        .getContext()
-        .clear({ x: 0, y: 0, ...drawableAreaDimensions })
-  }
+  const throttledSetDrawableAreaDimensions = useThrottle(500, props =>
+    setDrawableAreaDimensions(props)
+  )
 
   const setInitialDrawing = img => {
     if (!layerRef.current) return
@@ -60,6 +64,27 @@ const DrawableOverlay = props => {
     initialDrawing.onload = () => {
       context.drawImage(initialDrawing, 0, 0)
     }
+  }
+
+  const resizeObserver = new ResizeObserver(entries => {
+    const el = entries[0].target
+
+    const width = el.clientWidth - props.widthOffset
+    const height = el.clientHeight - props.heightOffset
+
+    throttledSetDrawableAreaDimensions({ width, height })
+  })
+
+  useEffect(() => {
+    if (stageRef && stageRef.current) resizeObserver.observe(stageRef.current)
+    return () => resizeObserver.unobserve(stageRef.current)
+  }, [stageRef])
+
+  const clearCanvas = () => {
+    const { height, width } = stageRef.current.getBoundingClientRect()
+
+    if (layerRef.current)
+      layerRef.current.getContext().clear({ x: 0, y: 0, height, width })
   }
 
   const handleReset = () => {
@@ -82,90 +107,109 @@ const DrawableOverlay = props => {
     onAddToHistory && onAddToHistory(img)
   }
 
-  const handleHistoryChange = direction => {
-    if (!layerRef.current) return
-    clearCanvas()
+  const handleHistoryChange = useCallback(
+    direction => {
+      if (!layerRef.current) return
+      clearCanvas()
 
-    const newImgSrcIndex =
-      direction === "undo" ? currentHistoryIndex - 1 : currentHistoryIndex + 1
+      const newImgSrcIndex =
+        direction === "undo" ? currentHistoryIndex - 1 : currentHistoryIndex + 1
 
-    const context = layerRef.current.getContext()
-    const newImage = new Image()
+      const context = layerRef.current.getContext()
+      const newImage = new Image()
 
-    context.globalCompositeOperation = "source-over"
+      context.globalCompositeOperation = "source-over"
 
-    newImage.src = history[newImgSrcIndex]
-    newImage.onload = () => {
-      context.drawImage(newImage, 0, 0)
-      if (drawMode === "eraser")
-        context.globalCompositeOperation = "destination-out"
-    }
+      newImage.src = history[newImgSrcIndex]
+      newImage.onload = () => {
+        context.drawImage(newImage, 0, 0)
+        if (drawMode === "eraser")
+          context.globalCompositeOperation = "destination-out"
+      }
 
-    setCurrentHistoryIndex(newImgSrcIndex)
-  }
+      setCurrentHistoryIndex(newImgSrcIndex)
+    },
+    [history, currentHistoryIndex, drawMode]
+  )
 
   const undoBrushStroke = () => handleHistoryChange("undo")
 
   const redoBrushStroke = () => handleHistoryChange("redo")
 
-  const contextValue = {
-    undo: undoBrushStroke,
-    redo: redoBrushStroke,
-    reset: handleReset,
-    setInitialDrawing,
-    currentHistoryIndex,
-    history,
-    drawMode,
-    setDrawMode,
-    brushSize,
-    setBrushSize,
-    eraserSize,
-    setEraserSize,
-    brushColor,
-    setBrushColor,
+  const renderStage = () => {
+    return (
+      <div className="ReactDrawableOverlay__Stage" ref={stageRef}>
+        {drawableAreaDimensions && (
+          <Stage
+            width={drawableAreaDimensions.width}
+            style={{ display: inDrawMode ? "block" : "none" }}
+            height={drawableAreaDimensions.height}
+          >
+            <Layer ref={layerRef}>
+              <Canvas
+                dimensions={drawableAreaDimensions}
+                drawMode={drawMode}
+                brushColor={brushColor}
+                brushSize={brushSize}
+                eraserSize={eraserSize}
+                onAddToHistory={addToHistory}
+              />
+            </Layer>
+          </Stage>
+        )}
+      </div>
+    )
   }
 
-  const className = props.className
-    ? `ReactDrawableOverlay ${props.className}`
-    : "ReactDrawableOverlay"
+  const drawableUtils = useMemo(
+    () => ({
+      reset: handleReset,
+      setDrawMode,
+      setBrushSize,
+      setEraserSize,
+      setBrushColor,
+      setInitialDrawing,
+      setInDrawMode,
+    }),
+    []
+  )
+
+  const drawableState = useMemo(
+    () => ({
+      drawMode,
+      brushSize,
+      eraserSize,
+      brushColor,
+      inDrawMode,
+    }),
+    [drawMode, brushSize, eraserSize, brushColor, inDrawMode]
+  )
+
+  const drawableHistory = useMemo(
+    () => ({
+      undo: undoBrushStroke,
+      redo: redoBrushStroke,
+      history,
+      currentHistoryIndex,
+    }),
+    [currentHistoryIndex, history, drawMode]
+  )
 
   return (
-    <DrawableContext.Provider value={contextValue}>
-      <div className={className}>
-        <div
-          className="ReactDrawableOverlay__DrawableContent"
-          ref={drawableRef}
-        >
-          {drawableAreaDimensions && (
-            <Stage
-              width={drawableAreaDimensions.width}
-              style={{ display: inDrawMode ? "block" : "none" }}
-              height={drawableAreaDimensions.height}
-              className="ReactDrawableOverlay__Stage"
-            >
-              <Layer ref={layerRef}>
-                <Canvas
-                  dimensions={drawableAreaDimensions}
-                  drawMode={drawMode}
-                  brushColor={brushColor}
-                  brushSize={brushSize}
-                  eraserSize={eraserSize}
-                  onAddToHistory={addToHistory}
-                />
-              </Layer>
-            </Stage>
-          )}
-          {renderDrawableContent(contextValue)}
-        </div>
-        {children}
-      </div>
-    </DrawableContext.Provider>
+    <DrawableUtilsContext.Provider value={drawableUtils}>
+      <DrawableStateContext.Provider value={drawableState}>
+        <DrawableStageContext.Provider value={renderStage()}>
+          <DrawableHistoryContext.Provider value={drawableHistory}>
+            {children}
+          </DrawableHistoryContext.Provider>
+        </DrawableStageContext.Provider>
+      </DrawableStateContext.Provider>
+    </DrawableUtilsContext.Provider>
   )
 }
 
 DrawableOverlay.propTypes = {
-  renderDrawableContent: PropTypes.func.isRequired,
-  inDrawMode: PropTypes.bool,
+  initialInDrawMode: PropTypes.bool,
   defaultBrushColor: PropTypes.string,
   heightOffset: PropTypes.number,
   widthOffset: PropTypes.number,
@@ -178,10 +222,10 @@ DrawableOverlay.propTypes = {
 }
 
 DrawableOverlay.defaultProps = {
-  inDrawMode: true,
+  initialInDrawMode: false,
   defaultBrushColor: "#000000",
   heightOffset: 0,
   widthOffset: 0,
 }
 
-export default DrawableOverlay
+export { DrawableOverlay }

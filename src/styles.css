@@ -1,17 +1,7 @@
-.ReactDrawableOverlay {
-  width: fit-content;
-  width: -moz-fit-content;
-  width: -webkit-fit-content;
-}
-
-.ReactDrawableOverlay__DrawableContent {
-  position: relative;
-}
-
 .ReactDrawableOverlay__Stage {
   position: absolute;
-  max-width: 100%;
   top: 0;
   left: 0;
-  z-index: 50;
+  right: 0;
+  bottom: 0;
 }

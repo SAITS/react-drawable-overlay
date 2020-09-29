@@ -15,29 +15,31 @@ $ yarn add react-drawable-overlay
 
 ```jsx
 import React, { Component } from "react"
-import DrawableOverlay from "react-drawable-overlay"
+import { DrawableOverlay, useStage } from "react-drawable-overlay"
 
-class Example extends Component {
-  renderDrawableContent = () => (
-    <div style={{ height: 500, width: 1000 }}>
-      <p>Content that can be drawn on</p>
-    </div>
+const Content = () => {
+  const stage = useStage()
+
+  return (
+    <React.Fragment>
+      <div style={{ position: "relative", height: 500, width: 500 }}>
+        {stage}
+      </div>
+      <p>
+        Content that cannot be drawn on but still has access to the
+        Context-values
+      </p>
+      <Toolbar />
+    </React.Fragment>
   )
+}
 
-  render() {
-    return (
-      <DrawableOverlay
-        renderDrawableContent={renderDrawableContent}
-        defaultBrushColor="#000"
-      >
-        <p>
-          Content that cannot be drawn on but still has access to the
-          Context-values
-        </p>
-        <Toolbar />
-      </DrawableOverlay>
-    )
-  }
+const Example = () => {
+  return (
+    <DrawableOverlay initialInDrawMode defaultBrushColor="#000">
+      <Content />
+    </DrawableOverlay>
+  )
 }
 ```
 
