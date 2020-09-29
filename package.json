@@ -1,6 +1,6 @@
 {
   "name": "react-drawable-overlay",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A package for wrapping elements with a drawable canvas.",
   "author": "Jimmy Höglund",
   "license": "MIT",

@@ -13,17 +13,6 @@ import ResizeObserver from "resize-observer-polyfill"
 import Canvas from "./components/Canvas"
 import "./styles.css"
 
-const useThrottle = (delay, callback) => {
-  let lastCall = 0
-  return (...args) => {
-    const now = new Date().getTime()
-    if (now - lastCall < delay) return null
-
-    lastCall = now
-    return callback(...args)
-  }
-}
-
 const DrawableStateContext = createContext({})
 const DrawableUtilsContext = createContext({})
 const DrawableHistoryContext = createContext({})
@@ -48,10 +37,6 @@ const DrawableOverlay = props => {
   const [brushColor, setBrushColor] = useState(props.defaultBrushColor)
   const [inDrawMode, setInDrawMode] = useState(initialInDrawMode || false)
 
-  const throttledSetDrawableAreaDimensions = useThrottle(500, props =>
-    setDrawableAreaDimensions(props)
-  )
-
   const setInitialDrawing = img => {
     if (!layerRef.current) return
     setHistory([])
@@ -72,7 +57,7 @@ const DrawableOverlay = props => {
     const width = el.clientWidth - props.widthOffset
     const height = el.clientHeight - props.heightOffset
 
-    throttledSetDrawableAreaDimensions({ width, height })
+    setDrawableAreaDimensions({ width, height })
   })
 
   useEffect(() => {
