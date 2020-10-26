@@ -42,12 +42,14 @@ const Canvas = props => {
     }
   }, [props.brushSize, props.eraserSize, props.drawMode])
 
-  const handleMouseDown = () => {
+  const handleMouseDown = ({ evt }) => {
+    if (evt.button !== 0) return
     setIsDrawing(true)
     setLastPointerPosition(image.current.getStage().getPointerPosition())
   }
 
-  const handleMouseUp = () => {
+  const handleMouseUp = ({ evt }) => {
+    if (evt.button !== 0) return
     setIsDrawing(false)
     props.onAddToHistory(image.current.getCanvas().toDataURL())
   }
