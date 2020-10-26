@@ -121,13 +121,30 @@ const DrawableOverlay = props => {
 
   const redoBrushStroke = () => handleHistoryChange("redo")
 
+  const getCursor = () => {
+    const color = brushColor.replace("#", "%23")
+    const fillOpacity = drawMode === "brush" ? 1 : 0
+    const strokeWidth = drawMode === "brush" ? 0 : 1
+    let cursorSize = drawMode === "brush" ? brushSize : eraserSize
+    if (cursorSize < 2) cursorSize = 2
+    const offset = cursorSize / 2
+    const viewBoxSize = cursorSize * 2
+
+    const circle = `<circle cx="${cursorSize}" cy="${cursorSize}" r="${cursorSize}" fill="${color}" fill-opacity="${fillOpacity}" stroke-width="${strokeWidth}" stroke="%23FFFFFF" />`
+
+    return `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" height="${cursorSize}" width="${cursorSize}" viewBox="0 0 ${viewBoxSize} ${viewBoxSize}">${circle}</svg>') ${offset} ${offset}, auto`
+  }
+
   const renderStage = () => {
     return (
       <div className="ReactDrawableOverlay__Stage" ref={stageRef}>
         {drawableAreaDimensions && (
           <Stage
             width={drawableAreaDimensions.width}
-            style={{ display: inDrawMode ? "block" : "none" }}
+            style={{
+              display: inDrawMode ? "block" : "none",
+              cursor: getCursor(),
+            }}
             height={drawableAreaDimensions.height}
           >
             <Layer ref={layerRef}>
