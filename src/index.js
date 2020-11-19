@@ -61,8 +61,9 @@ const DrawableOverlay = props => {
   })
 
   useEffect(() => {
-    if (stageRef && stageRef.current) resizeObserver.observe(stageRef.current)
-    return () => resizeObserver.unobserve(stageRef.current)
+    const stageInstance = stageRef.current
+    if (stageInstance) resizeObserver.observe(stageInstance)
+    return () => resizeObserver.unobserve(stageInstance)
   }, [stageRef])
 
   const clearCanvas = () => {

@@ -1,6 +1,6 @@
 {
   "name": "react-drawable-overlay",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A package for wrapping elements with a drawable canvas.",
   "author": "Jimmy Höglund",
   "license": "MIT",
@@ -70,7 +70,7 @@
     "dist"
   ],
   "dependencies": {
-    "react-konva": "^16.8.4",
+    "react-konva": "^17.0.0-0",
     "resize-observer-polyfill": "^1.5.1"
   }
 }
