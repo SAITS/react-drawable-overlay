@@ -4099,6 +4099,10 @@ klaw@^1.0.0:
   optionalDependencies:
     graceful-fs "^4.1.9"
 
+konva@^7.1.8:
+  version "7.2.4"
+  resolved "https://registry.yarnpkg.com/konva/-/konva-7.2.4.tgz#cfe9014b7c9cf382c61715f21dc82d4cc5bb6ef7"
+
 latest-version@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/latest-version/-/latest-version-3.1.0.tgz#a205383fea322b33b5ae3b18abee0dc2f356ee15"
@@ -5533,8 +5537,11 @@ react-dom@16.8.5:
     scheduler "^0.13.5"
 
 "react-drawable-overlay@link:..":
-  version "0.0.0"
-  uid ""
+  version "2.2.2"
+  dependencies:
+    konva "^7.1.8"
+    react-konva "^17.0.0-0"
+    resize-observer-polyfill "^1.5.1"
 
 react-error-overlay@^4.0.1:
   version "4.0.1"
@@ -5544,21 +5551,20 @@ react-is@^16.8.1:
   version "16.8.5"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.5.tgz#c54ac229dd66b5afe0de5acbe47647c3da692ff8"
 
-react-konva@^16.8.4:
-  version "16.8.4"
-  resolved "https://registry.yarnpkg.com/react-konva/-/react-konva-16.8.4.tgz#9c6f4e12694c3fcb28775c75f965705031f67fe4"
+react-konva@^17.0.0-0:
+  version "17.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/react-konva/-/react-konva-17.0.0-rc.1.tgz#e3ed8ceef09e34d9b21d096ddcbe233c90f0579d"
   dependencies:
-    react-reconciler "^0.20.2"
-    scheduler "^0.13.4"
+    react-reconciler "~0.26.0-rc.0"
+    scheduler "^0.19.1"
 
-react-reconciler@^0.20.2:
-  version "0.20.3"
-  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.20.3.tgz#ff5f75eb73e004a2a8757b41cd645baf442ea4b9"
+react-reconciler@~0.26.0-rc.0:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.26.1.tgz#860952dd359fd870f94895c254271e3a9de3b2d6"
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
-    prop-types "^15.6.2"
-    scheduler "^0.13.5"
+    scheduler "^0.20.1"
 
 react-scripts@^1.1.4:
   version "1.1.5"
@@ -5974,9 +5980,23 @@ sax@^1.2.1, sax@^1.2.4, sax@~1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
-scheduler@^0.13.4, scheduler@^0.13.5:
+scheduler@^0.13.5:
   version "0.13.5"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.13.5.tgz#b7226625167041298af3b98088a9dbbf6d7733a8"
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
+scheduler@^0.19.1:
+  version "0.19.1"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.19.1.tgz#4f3e2ed2c1a7d65681f4c854fa8c5a1ccb40f196"
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
+scheduler@^0.20.1:
+  version "0.20.1"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.20.1.tgz#da0b907e24026b01181ecbc75efdc7f27b5a000c"
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
@@ -6741,8 +6761,8 @@ uri-js@^4.2.2:
     punycode "^2.1.0"
 
 urijs@^1.16.1:
-  version "1.19.1"
-  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.1.tgz#5b0ff530c0cbde8386f6342235ba5ca6e995d25a"
+  version "1.19.6"
+  resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.6.tgz#51f8cb17ca16faefb20b9a31ac60f84aa2b7c870"
 
 urix@^0.1.0:
   version "0.1.0"
